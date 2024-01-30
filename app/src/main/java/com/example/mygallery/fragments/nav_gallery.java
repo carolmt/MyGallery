@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -53,30 +55,8 @@ public class nav_gallery extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
-
-    // Método llamado cuando se selecciona un elemento del menú contextual
-
-   /* public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.context_menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onContextItemSelected(ItemGallery item) {
-        String itemId = item.getCardNum();
-        if (itemId == R.id.action_share) {
-            // Lógica para compartir
-            return true;
-        } else if (itemId == R.id.action_delete) {
-            // Lógica para eliminar
-            return true;
-        } else {
-            return super.onContextItemSelected(item);
-        }
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -87,26 +67,18 @@ public class nav_gallery extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         gRecyclerView.setLayoutManager(layoutManager);
 
-       /* AdaptadorGallery adapter = new AdaptadorGallery(datosGallery);
-        gRecyclerView.setAdapter(adapter);*/
+        // Itera sobre los elementos de la galería y registra cada imagen para el menú contextual
+        for (ItemGallery item : datosGallery) {
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageResource(item.getImg()); // metodo de ItemGallery
 
+            // Registro la vista para el menú contextual
+            registerForContextMenu(imageView);
+        }
 
-        //Definir el menu que inflamos para la imagen
-        /*imageView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                getMenuInflater().inflate(R.menu.context_menu, menu);
-            }
-        });
-        // Agregar un clic para abrir el menú contextual
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openContextMenu(v);
-            }
-        });*/
         return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -117,5 +89,7 @@ public class nav_gallery extends Fragment {
         gAdapter = new AdaptadorGallery(datosGallery);
 
         gRecyclerView.setAdapter(gAdapter);
+
+
     }
 }

@@ -9,12 +9,17 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +43,29 @@ public class MainActivity extends AppCompatActivity {
         //Estas dos líneas integran todo: Toolbar, menu lateral y el navController
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
     }
+    // Método llamado cuando se selecciona un elemento del menú contextual
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_share) {
+            // Lógica para compartir
+            return true;
+        } else if (itemId == R.id.action_delete) {
+            // Lógica para eliminar
+            return true;
+        }
+        else if (itemId == R.id.action_edit) {
+            // Lógica para editar
+            return true;
+        }
+        else {
+            return super.onContextItemSelected(item);
+        }
+    }
+
     // Método para gestionar el botón de navegación de la Toolbar
     @Override
     public boolean onSupportNavigateUp() {
